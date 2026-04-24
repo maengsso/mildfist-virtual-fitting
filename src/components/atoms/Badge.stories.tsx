@@ -94,6 +94,18 @@ export const MasonryOverlay: Story = {
   ),
 };
 
+export const AdminMicroBadge: Story = {
+  name: '관리자 micro (이름 옆 빨간 배지)',
+  render: () => (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      <span style={{ fontSize: 14, color: '#211922', fontWeight: 500 }}>스타일리스트 민지</span>
+      <Badge variant="micro" tone="brand">
+        관리자
+      </Badge>
+    </div>
+  ),
+};
+
 export const AllTones: Story = {
   render: () => (
     <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>

@@ -1,16 +1,19 @@
 'use client';
 
-import { CSSProperties, ReactNode } from 'react';
+import { CSSProperties } from 'react';
 import { color, radius, typography } from '@/tokens';
 import { SearchBar } from '../molecules/SearchBar';
-import { Avatar } from '../atoms/Avatar';
+import { UserMenu, UserMenuItem } from '../molecules/UserMenu';
+import { Button } from '../atoms/Button';
 
 export interface AppHeaderProps {
   brand?: string;
   searchPlaceholder?: string;
   onSearch?: (value: string) => void;
+  searchReadOnly?: boolean;
   user?: { name: string; src?: string };
-  actions?: ReactNode;
+  userMenuItems?: UserMenuItem[];
+  onLogin?: () => void;
   style?: CSSProperties;
 }
 
@@ -18,8 +21,10 @@ export function AppHeader({
   brand = 'MildFist',
   searchPlaceholder = '스타일 검색...',
   onSearch,
+  searchReadOnly,
   user,
-  actions,
+  userMenuItems = [],
+  onLogin,
   style,
 }: AppHeaderProps) {
   const wrapper: CSSProperties = {
@@ -78,13 +83,19 @@ export function AppHeader({
       <div style={{ flex: 1, maxWidth: 384, margin: '0 16px' }}>
         <SearchBar
           placeholder={searchPlaceholder}
+          readOnly={searchReadOnly}
           onChange={(e) => onSearch?.(e.target.value)}
         />
       </div>
 
       <div style={{ display: 'flex', alignItems: 'center', gap: 12, flexShrink: 0 }}>
-        {actions}
-        {user ? <Avatar name={user.name} src={user.src} size="sm" /> : null}
+        {user ? (
+          <UserMenu userName={user.name} userImage={user.src} items={userMenuItems} />
+        ) : (
+          <Button size="md" onClick={onLogin}>
+            로그인
+          </Button>
+        )}
       </div>
     </header>
   );

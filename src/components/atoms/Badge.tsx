@@ -10,7 +10,7 @@ export type BadgeTone =
   | 'informative'
   | 'magic';
 
-export type BadgeVariant = 'tinted' | 'overlay';
+export type BadgeVariant = 'tinted' | 'overlay' | 'solid' | 'micro';
 
 export interface BadgeProps {
   tone?: BadgeTone;
@@ -33,21 +33,48 @@ export function Badge({ tone = 'neutral', variant = 'tinted', color, children, s
 
   let background: string;
   let fg: string;
+  let padding: string;
+  let borderRadius: number;
+  let fontSize: string;
 
-  if (variant === 'overlay') {
-    background = 'rgba(255, 255, 255, 0.85)';
-    fg = primitive.gray[900];
-  } else {
-    background = `${baseColor}14`;
-    fg = baseColor;
+  switch (variant) {
+    case 'overlay':
+      background = 'rgba(255, 255, 255, 0.85)';
+      fg = primitive.gray[900];
+      padding = '2px 8px';
+      borderRadius = 8;
+      fontSize = typography.label.sm.fontSize;
+      break;
+    case 'solid':
+      background = baseColor;
+      fg = primitive.gray['00'];
+      padding = '2px 8px';
+      borderRadius = 8;
+      fontSize = typography.label.sm.fontSize;
+      break;
+    case 'micro':
+      background = baseColor;
+      fg = primitive.gray['00'];
+      padding = '2px 6px';
+      borderRadius = 6;
+      fontSize = '10px';
+      break;
+    case 'tinted':
+    default:
+      background = `${baseColor}14`;
+      fg = baseColor;
+      padding = '2px 8px';
+      borderRadius = 8;
+      fontSize = typography.label.sm.fontSize;
+      break;
   }
 
-  const base: CSSProperties = {
+  const styleBase: CSSProperties = {
     display: 'inline-flex',
     alignItems: 'center',
-    padding: '2px 8px',
-    borderRadius: 8,
-    fontSize: typography.label.sm.fontSize,
+    padding,
+    borderRadius,
+    fontSize,
     fontWeight: typography.label.sm.fontWeight,
     lineHeight: typography.label.sm.lineHeight,
     background,
@@ -56,5 +83,5 @@ export function Badge({ tone = 'neutral', variant = 'tinted', color, children, s
     flexShrink: 0,
   };
 
-  return <span style={{ ...base, ...style }}>{children}</span>;
+  return <span style={{ ...styleBase, ...style }}>{children}</span>;
 }

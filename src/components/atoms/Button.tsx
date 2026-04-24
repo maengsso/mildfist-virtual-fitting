@@ -1,14 +1,16 @@
 'use client';
 
 import { CSSProperties, ReactNode, ButtonHTMLAttributes } from 'react';
-import { color, radius, typography } from '@/tokens';
+import { color, primitive, radius, typography } from '@/tokens';
 
-export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'circular';
+export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'outline' | 'circular';
 export type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
+export type ButtonTone = 'brand' | 'positive' | 'critical' | 'neutral';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
   size?: ButtonSize;
+  tone?: ButtonTone;
   children?: ReactNode;
   fullWidth?: boolean;
 }
@@ -23,7 +25,17 @@ const sizeMap: Record<
   xl: { padding: '12px 24px', fontSize: typography.label.md.fontSize, radius: radius.modal, gap: 8 },
 };
 
-const variantBase: Record<ButtonVariant, CSSProperties> = {
+const toneColorMap: Record<ButtonTone, string> = {
+  brand: primitive.red[500],
+  positive: primitive.green[600],
+  critical: primitive.red[700],
+  neutral: primitive.gray[500],
+};
+
+const variantBase: Record<
+  Exclude<ButtonVariant, 'outline' | 'circular'>,
+  CSSProperties
+> = {
   primary: {
     background: color.bg['brand-solid'],
     color: color.fg['neutral-inverted'],
@@ -39,29 +51,32 @@ const variantBase: Record<ButtonVariant, CSSProperties> = {
     color: color.fg['neutral-solid'],
     border: 'none',
   },
-  circular: {
-    background: color.bg['neutral-muted'],
-    color: color.fg['neutral-solid'],
-    border: 'none',
-    borderRadius: radius.pill,
-    width: 44,
-    height: 44,
-    padding: 0,
-    display: 'inline-flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+};
+
+const circularBase: CSSProperties = {
+  background: color.bg['neutral-muted'],
+  color: color.fg['neutral-solid'],
+  border: 'none',
+  borderRadius: radius.pill,
+  width: 44,
+  height: 44,
+  padding: 0,
+  display: 'inline-flex',
+  alignItems: 'center',
+  justifyContent: 'center',
 };
 
 const disabledStyle: CSSProperties = {
   background: color.bg['neutral-muted'],
   color: color.fg['neutral-subtle'],
   cursor: 'not-allowed',
+  border: 'none',
 };
 
 export function Button({
   variant = 'primary',
   size = 'lg',
+  tone = 'brand',
   fullWidth,
   style,
   disabled,
@@ -79,16 +94,30 @@ export function Button({
     lineHeight: typography.label.md.lineHeight,
     cursor: 'pointer',
     width: fullWidth ? '100%' : undefined,
-    transition: 'background-color 120ms ease',
+    transition: 'background-color 120ms ease, border-color 120ms ease',
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
     gap: s.gap,
   };
 
+  let variantStyle: CSSProperties;
+  if (variant === 'circular') {
+    variantStyle = circularBase;
+  } else if (variant === 'outline') {
+    const toneColor = toneColorMap[tone];
+    variantStyle = {
+      background: 'transparent',
+      color: toneColor,
+      border: `1px solid ${toneColor}`,
+    };
+  } else {
+    variantStyle = variantBase[variant];
+  }
+
   const composed = {
     ...base,
-    ...variantBase[variant],
+    ...variantStyle,
     ...(disabled ? disabledStyle : null),
     ...style,
   };

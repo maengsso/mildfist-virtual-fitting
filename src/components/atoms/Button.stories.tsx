@@ -8,12 +8,10 @@ const meta: Meta<typeof Button> = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['primary', 'secondary', 'ghost', 'circular'],
+      options: ['primary', 'secondary', 'ghost', 'outline', 'circular'],
     },
-    size: {
-      control: 'select',
-      options: ['sm', 'md', 'lg', 'xl'],
-    },
+    size: { control: 'select', options: ['sm', 'md', 'lg', 'xl'] },
+    tone: { control: 'select', options: ['brand', 'positive', 'critical', 'neutral'] },
     disabled: { control: 'boolean' },
     fullWidth: { control: 'boolean' },
   },
@@ -26,6 +24,8 @@ type Story = StoryObj<typeof Button>;
 export const Primary: Story = {};
 export const Secondary: Story = { args: { variant: 'secondary' } };
 export const Ghost: Story = { args: { variant: 'ghost' } };
+export const OutlineBrand: Story = { args: { variant: 'outline', tone: 'brand', size: 'sm', children: '비활성화' } };
+export const OutlinePositive: Story = { args: { variant: 'outline', tone: 'positive', size: 'sm', children: '활성화' } };
 export const Circular: Story = { args: { variant: 'circular', children: '+' } };
 
 export const Sizes: Story = {
@@ -41,6 +41,29 @@ export const Sizes: Story = {
 };
 
 export const Disabled: Story = { args: { disabled: true } };
+
+export const AdminActionButtons: Story = {
+  name: 'Admin 아웃라인 (실 사용)',
+  render: () => (
+    <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+      <Button variant="outline" tone="brand" size="sm">
+        비활성화
+      </Button>
+      <Button variant="outline" tone="positive" size="sm">
+        활성화
+      </Button>
+      <Button variant="outline" tone="brand" size="sm">
+        숨김
+      </Button>
+      <Button variant="outline" tone="neutral" size="sm">
+        삭제
+      </Button>
+      <Button variant="secondary" size="sm">
+        무시
+      </Button>
+    </div>
+  ),
+};
 
 export const LoginFormUsage: Story = {
   name: 'Login 폼 (실 화면)',
@@ -120,15 +143,7 @@ export const FloatingActionUsage: Story = {
         }}
       >
         <Button size="xl">
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-          >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             <line x1="12" y1="5" x2="12" y2="19" />
             <line x1="5" y1="12" x2="19" y2="12" />
           </svg>
