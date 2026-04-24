@@ -105,6 +105,46 @@ function seedIfNeeded() {
   insertUser({ email: "fashion@mildfist.com", password_hash: hash("fashion1234"), name: "패션러버 서준", credits: 30, is_admin: 0, is_active: 1, profile_image: null });
   insertUser({ email: "test@mildfist.com", password_hash: hash("test1234"), name: "코디왕 하은", credits: 100, is_admin: 0, is_active: 1, profile_image: null });
 
+  // Dummy members (for admin member list preview)
+  const dummyMembers: {
+    email: string;
+    name: string;
+    credits: number;
+    is_active: number;
+    daysAgo: number;
+  }[] = [
+    { email: "jiwoo.kim@litmers.com",   name: "김지우",   credits: 12,  is_active: 1, daysAgo: 1 },
+    { email: "dohyun.lee@litmers.com",  name: "이도현",   credits: 240, is_active: 1, daysAgo: 2 },
+    { email: "seoa.park@litmers.com",   name: "박서아",   credits: 0,   is_active: 1, daysAgo: 4 },
+    { email: "yoojin.choi@litmers.com", name: "최유진",   credits: 87,  is_active: 1, daysAgo: 6 },
+    { email: "haneul.jung@litmers.com", name: "정하늘",   credits: 2,   is_active: 0, daysAgo: 9 },
+    { email: "minjun.yoon@litmers.com", name: "윤민준",   credits: 55,  is_active: 1, daysAgo: 13 },
+    { email: "sua.han@litmers.com",     name: "한수아",   credits: 310, is_active: 1, daysAgo: 18 },
+    { email: "jihoon.baek@litmers.com", name: "백지훈",   credits: 18,  is_active: 1, daysAgo: 24 },
+    { email: "yerin.shin@litmers.com",  name: "신예린",   credits: 45,  is_active: 0, daysAgo: 31 },
+    { email: "taeho.kwon@litmers.com",  name: "권태호",   credits: 120, is_active: 1, daysAgo: 40 },
+    { email: "eunseo.oh@litmers.com",   name: "오은서",   credits: 6,   is_active: 1, daysAgo: 52 },
+    { email: "hajun.seo@litmers.com",   name: "서하준",   credits: 0,   is_active: 0, daysAgo: 66 },
+    { email: "chaewon.moon@litmers.com",name: "문채원",   credits: 72,  is_active: 1, daysAgo: 80 },
+    { email: "jiho.ahn@litmers.com",    name: "안지호",   credits: 29,  is_active: 1, daysAgo: 98 },
+    { email: "seoyeon.ko@litmers.com",  name: "고서연",   credits: 180, is_active: 1, daysAgo: 120 },
+  ];
+
+  for (const m of dummyMembers) {
+    const user: User = {
+      id: nextId.users++,
+      email: m.email,
+      password_hash: hash("demo1234"),
+      name: m.name,
+      profile_image: null,
+      credits: m.credits,
+      is_admin: 0,
+      is_active: m.is_active,
+      created_at: daysAgo(m.daysAgo),
+    };
+    tables.users.push(user);
+  }
+
   // Sample styles
   const sampleStyles = [
     {
@@ -476,7 +516,7 @@ function execAll(sql: string, params: unknown[]): any[] {
   }
 
   // Fittings: SELECT * FROM fittings WHERE user_id = ? ORDER BY created_at DESC LIMIT 50
-  if (/FROM fittings WHERE user_id/i.test(s)) {
+  if (/^SELECT \* FROM fittings WHERE user_id/i.test(s)) {
     return tables.fittings
       .filter(f => f.user_id === Number(p(0, params)))
       .sort((a, b) => b.created_at.localeCompare(a.created_at))
@@ -484,7 +524,7 @@ function execAll(sql: string, params: unknown[]): any[] {
   }
 
   // Credit transactions: SELECT * FROM credit_transactions WHERE user_id = ? ORDER BY created_at DESC LIMIT 50
-  if (/FROM credit_transactions WHERE user_id = \?/i.test(s) && !s.includes("type")) {
+  if (/^SELECT \* FROM credit_transactions WHERE user_id = \?/i.test(s) && !s.includes("type")) {
     return tables.credit_transactions
       .filter(ct => ct.user_id === Number(p(0, params)))
       .sort((a, b) => b.created_at.localeCompare(a.created_at))
