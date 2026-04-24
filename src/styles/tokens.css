@@ -31,7 +31,8 @@
   --stroke-focused: #435ee5;
 
   --radius-tab: 2px;
-  --radius-control: 12px;
+  --radius-chip: 12px;
+  --radius-control: 16px;
   --radius-card: 16px;
   --radius-modal: 20px;
   --radius-pill: 9999px;

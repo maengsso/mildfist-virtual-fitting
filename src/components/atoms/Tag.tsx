@@ -15,16 +15,16 @@ export function Tag({ selected, onClick, children, style }: TagProps) {
     display: 'inline-flex',
     alignItems: 'center',
     gap: 6,
-    padding: '6px 12px',
-    borderRadius: radius.pill,
+    padding: '6px 14px',
+    borderRadius: radius.chip,
     fontSize: typography.label.sm.fontSize,
     fontWeight: typography.label.sm.fontWeight,
     lineHeight: typography.label.sm.lineHeight,
     cursor: onClick ? 'pointer' : 'default',
-    border: `1px solid ${selected ? color.stroke['brand-solid'] : color.stroke['neutral-muted']}`,
-    background: selected ? color.bg['brand-solid'] : color.bg['layer-default'],
+    border: 'none',
+    background: selected ? color.bg['brand-solid'] : color.bg['neutral-muted'],
     color: selected ? color.fg['neutral-inverted'] : color.fg['neutral-solid'],
-    transition: 'all 120ms ease',
+    transition: 'background-color 120ms ease, color 120ms ease',
   };
 
   if (onClick) {

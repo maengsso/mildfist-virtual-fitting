@@ -12,7 +12,7 @@ export function SearchBar({ wrapperStyle, style, placeholder = '검색', ...rest
     display: 'flex',
     alignItems: 'center',
     gap: 8,
-    padding: '10px 16px',
+    padding: '8px 16px',
     background: color.bg['layer-subtle'],
     borderRadius: radius.modal,
     width: '100%',

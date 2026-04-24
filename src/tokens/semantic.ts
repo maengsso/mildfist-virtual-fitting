@@ -61,7 +61,8 @@ export const space = {
 
 export const radius = {
   tab: primitiveRadius.xs,
-  control: primitiveRadius.lg,
+  chip: primitiveRadius.lg,
+  control: primitiveRadius.xl,
   card: primitiveRadius.xl,
   modal: primitiveRadius['2xl'],
   pill: primitiveRadius.full,

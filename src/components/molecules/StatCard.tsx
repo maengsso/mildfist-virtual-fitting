@@ -18,33 +18,37 @@ export function StatCard({ label, value, icon, style }: StatCardProps) {
     padding: 20,
     display: 'flex',
     flexDirection: 'column',
-    gap: 12,
+  };
+
+  const header: CSSProperties = {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginBottom: 12,
   };
 
   const labelStyle: CSSProperties = {
-    fontSize: typography.label.md.fontSize,
-    fontWeight: typography.label.md.fontWeight,
-    lineHeight: typography.label.md.lineHeight,
+    fontSize: typography.body.sm.fontSize,
+    fontWeight: typography.body.sm.fontWeight,
+    lineHeight: typography.body.sm.lineHeight,
     color: color.fg['neutral-muted'],
-    display: 'flex',
-    alignItems: 'center',
-    gap: 8,
   };
 
   const valueStyle: CSSProperties = {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: typography.heading.xl.fontWeight,
     lineHeight: typography.heading.xl.lineHeight,
     color: color.fg['neutral-solid'],
+    margin: 0,
   };
 
   return (
     <div style={{ ...wrapper, ...style }}>
-      <span style={labelStyle}>
+      <div style={header}>
+        <span style={labelStyle}>{label}</span>
         {icon}
-        {label}
-      </span>
-      <span style={valueStyle}>{value}</span>
+      </div>
+      <p style={valueStyle}>{value}</p>
     </div>
   );
 }

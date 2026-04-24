@@ -13,13 +13,13 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fullWidth?: boolean;
 }
 
-const sizeMap: Record<ButtonSize, { padding: string; fontSize: string; radius: string }> = {
-  sm: { padding: '6px 12px', fontSize: typography.label.sm.fontSize, radius: radius.control },
-  md: { padding: '8px 16px', fontSize: typography.label.md.fontSize, radius: radius.control },
-  lg: { padding: '12px 24px', fontSize: typography.body.md.fontSize, radius: radius.card },
+const sizeMap: Record<ButtonSize, { padding: string; fontSize: string }> = {
+  sm: { padding: '6px 14px', fontSize: typography.label.sm.fontSize },
+  md: { padding: '12px 20px', fontSize: typography.label.md.fontSize },
+  lg: { padding: '14px 24px', fontSize: typography.body.lg.fontSize },
 };
 
-const variantMap: Record<ButtonVariant, CSSProperties> = {
+const variantBase: Record<ButtonVariant, CSSProperties> = {
   primary: {
     background: color.bg['brand-solid'],
     color: color.fg['neutral-inverted'],
@@ -49,6 +49,12 @@ const variantMap: Record<ButtonVariant, CSSProperties> = {
   },
 };
 
+const disabledStyle: CSSProperties = {
+  background: color.bg['neutral-muted'],
+  color: color.fg['neutral-subtle'],
+  cursor: 'not-allowed',
+};
+
 export function Button({
   variant = 'primary',
   size = 'md',
@@ -59,23 +65,32 @@ export function Button({
   ...rest
 }: ButtonProps) {
   const sizeStyles = sizeMap[size];
-  const variantStyles = variantMap[variant];
   const isCircular = variant === 'circular';
 
   const base: CSSProperties = {
     padding: isCircular ? 0 : sizeStyles.padding,
-    borderRadius: isCircular ? radius.pill : sizeStyles.radius,
+    borderRadius: isCircular ? radius.pill : radius.control,
     fontSize: sizeStyles.fontSize,
     fontWeight: typography.label.md.fontWeight,
     lineHeight: typography.label.md.lineHeight,
-    cursor: disabled ? 'not-allowed' : 'pointer',
-    opacity: disabled ? 0.5 : 1,
+    cursor: 'pointer',
     width: fullWidth ? '100%' : undefined,
     transition: 'background-color 120ms ease',
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+  };
+
+  const composed = {
+    ...base,
+    ...variantBase[variant],
+    ...(disabled ? disabledStyle : null),
+    ...style,
   };
 
   return (
-    <button {...rest} disabled={disabled} style={{ ...base, ...variantStyles, ...style }}>
+    <button {...rest} disabled={disabled} style={composed}>
       {children}
     </button>
   );
