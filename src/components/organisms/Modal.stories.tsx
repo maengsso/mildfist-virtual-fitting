@@ -12,28 +12,95 @@ const meta: Meta<typeof Modal> = {
 
 export default meta;
 
-export const Interactive: StoryObj = {
+export const Basic: StoryObj = {
   render: () => {
     const [open, setOpen] = useState(false);
     return (
       <div>
-        <Button onClick={() => setOpen(true)}>모달 열기</Button>
+        <Button size="lg" onClick={() => setOpen(true)}>
+          모달 열기
+        </Button>
         <Modal
           open={open}
           onClose={() => setOpen(false)}
-          title="신고 사유 선택"
+          title="확인"
           footer={
             <>
-              <Button variant="ghost" onClick={() => setOpen(false)}>
+              <Button variant="secondary" size="lg" onClick={() => setOpen(false)}>
                 취소
               </Button>
-              <Button onClick={() => setOpen(false)}>제출</Button>
+              <Button size="lg" onClick={() => setOpen(false)}>
+                확인
+              </Button>
             </>
           }
         >
-          이 콘텐츠를 신고하는 사유를 선택해 주세요.
+          이 작업을 진행하시겠습니까?
         </Modal>
       </div>
+    );
+  },
+};
+
+export const ReportModalExact: StoryObj = {
+  name: '스타일 신고 (실 사용)',
+  render: () => {
+    const REASONS = ['부적절한 이미지', '저작권 침해', '스팸/광고', '불쾌한 콘텐츠', '기타'];
+    const [open, setOpen] = useState(true);
+    const [reason, setReason] = useState<string>('');
+
+    return (
+      <>
+        <Button size="lg" onClick={() => setOpen(true)}>
+          신고 모달 열기
+        </Button>
+        <Modal
+          open={open}
+          onClose={() => setOpen(false)}
+          title="스타일 신고"
+          width={384}
+          footer={
+            <>
+              <Button
+                variant="secondary"
+                size="lg"
+                fullWidth
+                onClick={() => setOpen(false)}
+              >
+                취소
+              </Button>
+              <Button size="lg" fullWidth disabled={!reason} onClick={() => setOpen(false)}>
+                신고하기
+              </Button>
+            </>
+          }
+        >
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            {REASONS.map((r) => {
+              const selected = reason === r;
+              return (
+                <button
+                  key={r}
+                  type="button"
+                  onClick={() => setReason(r)}
+                  style={{
+                    textAlign: 'left',
+                    padding: 12,
+                    fontSize: 14,
+                    background: selected ? '#e60023' : '#f6f6f3',
+                    color: selected ? '#ffffff' : '#211922',
+                    borderRadius: 12,
+                    border: 'none',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {r}
+                </button>
+              );
+            })}
+          </div>
+        </Modal>
+      </>
     );
   },
 };

@@ -4,7 +4,7 @@ import { CSSProperties, ReactNode, ButtonHTMLAttributes } from 'react';
 import { color, radius, typography } from '@/tokens';
 
 export type ButtonVariant = 'primary' | 'secondary' | 'ghost' | 'circular';
-export type ButtonSize = 'sm' | 'md' | 'lg';
+export type ButtonSize = 'sm' | 'md' | 'lg' | 'xl';
 
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: ButtonVariant;
@@ -13,10 +13,14 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   fullWidth?: boolean;
 }
 
-const sizeMap: Record<ButtonSize, { padding: string; fontSize: string }> = {
-  sm: { padding: '6px 14px', fontSize: typography.label.sm.fontSize },
-  md: { padding: '12px 20px', fontSize: typography.label.md.fontSize },
-  lg: { padding: '14px 24px', fontSize: typography.body.lg.fontSize },
+const sizeMap: Record<
+  ButtonSize,
+  { padding: string; fontSize: string; radius: string; gap: number }
+> = {
+  sm: { padding: '6px 14px', fontSize: typography.label.sm.fontSize, radius: radius.chip, gap: 4 },
+  md: { padding: '8px 20px', fontSize: typography.label.md.fontSize, radius: radius.control, gap: 8 },
+  lg: { padding: '12px 20px', fontSize: typography.label.md.fontSize, radius: radius.control, gap: 8 },
+  xl: { padding: '12px 24px', fontSize: typography.label.md.fontSize, radius: radius.modal, gap: 8 },
 };
 
 const variantBase: Record<ButtonVariant, CSSProperties> = {
@@ -57,20 +61,20 @@ const disabledStyle: CSSProperties = {
 
 export function Button({
   variant = 'primary',
-  size = 'md',
+  size = 'lg',
   fullWidth,
   style,
   disabled,
   children,
   ...rest
 }: ButtonProps) {
-  const sizeStyles = sizeMap[size];
+  const s = sizeMap[size];
   const isCircular = variant === 'circular';
 
   const base: CSSProperties = {
-    padding: isCircular ? 0 : sizeStyles.padding,
-    borderRadius: isCircular ? radius.pill : radius.control,
-    fontSize: sizeStyles.fontSize,
+    padding: isCircular ? 0 : s.padding,
+    borderRadius: isCircular ? radius.pill : s.radius,
+    fontSize: s.fontSize,
     fontWeight: typography.label.md.fontWeight,
     lineHeight: typography.label.md.lineHeight,
     cursor: 'pointer',
@@ -79,7 +83,7 @@ export function Button({
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
-    gap: 6,
+    gap: s.gap,
   };
 
   const composed = {

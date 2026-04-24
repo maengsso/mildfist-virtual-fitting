@@ -3,18 +3,27 @@
 import { CSSProperties, InputHTMLAttributes } from 'react';
 import { color, radius, typography } from '@/tokens';
 
+export type SearchBarVariant = 'header' | 'compact';
+
 export interface SearchBarProps extends InputHTMLAttributes<HTMLInputElement> {
+  variant?: SearchBarVariant;
   wrapperStyle?: CSSProperties;
 }
 
-export function SearchBar({ wrapperStyle, style, placeholder = '검색', ...rest }: SearchBarProps) {
+export function SearchBar({
+  variant = 'header',
+  wrapperStyle,
+  style,
+  placeholder = '검색',
+  ...rest
+}: SearchBarProps) {
   const wrapperBase: CSSProperties = {
     display: 'flex',
     alignItems: 'center',
     gap: 8,
     padding: '8px 16px',
     background: color.bg['layer-subtle'],
-    borderRadius: radius.modal,
+    borderRadius: variant === 'compact' ? radius.chip : radius.modal,
     width: '100%',
   };
 
@@ -31,9 +40,18 @@ export function SearchBar({ wrapperStyle, style, placeholder = '검색', ...rest
 
   return (
     <div style={{ ...wrapperBase, ...wrapperStyle }}>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke={color.fg['neutral-subtle']} strokeWidth="2">
-        <circle cx="11" cy="11" r="7" />
-        <path d="M21 21l-4.3-4.3" />
+      <svg
+        width="16"
+        height="16"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke={color.fg['neutral-subtle']}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <circle cx="11" cy="11" r="8" />
+        <line x1="21" y1="21" x2="16.65" y2="16.65" />
       </svg>
       <input {...rest} placeholder={placeholder} style={{ ...inputBase, ...style }} />
     </div>

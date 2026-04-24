@@ -66,7 +66,7 @@ export function Modal({ open, onClose, title, children, footer, width = 480 }: M
         {title ? <h3 style={titleStyle}>{title}</h3> : null}
         <div>{children}</div>
         {footer ? (
-          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: 8 }}>{footer}</div>
+          <div style={{ display: 'flex', gap: 12 }}>{footer}</div>
         ) : null}
       </div>
     </div>

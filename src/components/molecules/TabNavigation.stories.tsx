@@ -11,15 +11,29 @@ const meta: Meta<typeof TabNavigation> = {
 
 export default meta;
 
-const items: TabItem[] = [
-  { id: 'latest', label: '최신' },
-  { id: 'popular', label: '인기' },
-  { id: 'following', label: '팔로잉' },
+const homeTabs: TabItem[] = [
+  { id: 'latest', label: '최신순' },
+  { id: 'popular', label: '인기순' },
 ];
 
-export const Interactive: StoryObj = {
+const mypageTabs: TabItem[] = [
+  { id: 'styles', label: '내 스타일' },
+  { id: 'fittings', label: '피팅 히스토리' },
+  { id: 'credits', label: '크레딧' },
+];
+
+export const HomeSortTabs: StoryObj = {
+  name: 'Home Sort (gap 16)',
   render: () => {
     const [active, setActive] = useState('latest');
-    return <TabNavigation items={items} activeId={active} onChange={setActive} />;
+    return <TabNavigation items={homeTabs} activeId={active} onChange={setActive} gap={16} />;
+  },
+};
+
+export const MyPageTabs: StoryObj = {
+  name: 'MyPage (gap 24)',
+  render: () => {
+    const [active, setActive] = useState('styles');
+    return <TabNavigation items={mypageTabs} activeId={active} onChange={setActive} gap={24} />;
   },
 };

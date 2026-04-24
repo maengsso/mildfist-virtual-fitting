@@ -8,7 +8,7 @@ const meta: Meta<typeof Avatar> = {
   argTypes: {
     size: { control: 'select', options: ['xs', 'sm', 'md', 'lg'] },
   },
-  args: { name: '김밀드', size: 'md' },
+  args: { name: '김민지', size: 'md' },
 };
 
 export default meta;
@@ -23,12 +23,29 @@ export const WithImage: Story = {
 };
 
 export const AllSizes: Story = {
+  name: 'Sizes (실 사용 매핑)',
   render: () => (
-    <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-      <Avatar name="Kim" size="xs" />
-      <Avatar name="Kim" size="sm" />
-      <Avatar name="Kim" size="md" />
-      <Avatar name="Kim" size="lg" />
+    <div style={{ display: 'flex', gap: 16, alignItems: 'flex-end' }}>
+      <div style={{ textAlign: 'center' }}>
+        <Avatar name="Kim" size="xs" />
+        <p style={{ fontSize: 12, color: '#62625b', marginTop: 4 }}>xs — 홈 카드</p>
+      </div>
+      <div style={{ textAlign: 'center' }}>
+        <Avatar name="Kim" size={28} />
+        <p style={{ fontSize: 12, color: '#62625b', marginTop: 4 }}>28 — 회원 테이블</p>
+      </div>
+      <div style={{ textAlign: 'center' }}>
+        <Avatar name="Kim" size="sm" />
+        <p style={{ fontSize: 12, color: '#62625b', marginTop: 4 }}>sm — 헤더</p>
+      </div>
+      <div style={{ textAlign: 'center' }}>
+        <Avatar name="Kim" size="md" />
+        <p style={{ fontSize: 12, color: '#62625b', marginTop: 4 }}>md — 상세 정보</p>
+      </div>
+      <div style={{ textAlign: 'center' }}>
+        <Avatar name="Kim" size="lg" />
+        <p style={{ fontSize: 12, color: '#62625b', marginTop: 4 }}>lg — 프로필</p>
+      </div>
     </div>
   ),
 };

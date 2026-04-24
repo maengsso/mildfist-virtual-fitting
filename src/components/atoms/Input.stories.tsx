@@ -10,9 +10,7 @@ const meta: Meta<typeof Input> = {
     disabled: { control: 'boolean' },
     placeholder: { control: 'text' },
   },
-  args: {
-    placeholder: '이메일을 입력하세요',
-  },
+  args: { placeholder: '이메일을 입력하세요' },
   parameters: { layout: 'padded' },
 };
 
@@ -20,11 +18,25 @@ export default meta;
 type Story = StoryObj<typeof Input>;
 
 export const Default: Story = {};
+export const Invalid: Story = { args: { invalid: true, defaultValue: '잘못된 값' } };
+export const Disabled: Story = { args: { disabled: true, defaultValue: '수정 불가' } };
 
-export const Invalid: Story = {
-  args: { invalid: true, value: '잘못된 값', onChange: () => {} },
-};
-
-export const Disabled: Story = {
-  args: { disabled: true, value: '수정 불가', onChange: () => {} },
+export const LoginFormFields: StoryObj = {
+  name: '로그인 폼 필드 (실 사용)',
+  render: () => (
+    <form style={{ display: 'flex', flexDirection: 'column', gap: 14, maxWidth: 360 }}>
+      <label style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+        <span style={{ fontSize: 12, fontWeight: 500, color: '#211922' }}>이름</span>
+        <Input placeholder="홍길동" />
+      </label>
+      <label style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+        <span style={{ fontSize: 12, fontWeight: 500, color: '#211922' }}>이메일</span>
+        <Input type="email" placeholder="example@mildfist.com" />
+      </label>
+      <label style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+        <span style={{ fontSize: 12, fontWeight: 500, color: '#211922' }}>비밀번호</span>
+        <Input type="password" placeholder="••••••••" />
+      </label>
+    </form>
+  ),
 };

@@ -1,26 +1,32 @@
 'use client';
 
 import { CSSProperties } from 'react';
-import { color, typography, radius } from '@/tokens';
+import { color, radius } from '@/tokens';
 
 export type AvatarSize = 'xs' | 'sm' | 'md' | 'lg';
 
 export interface AvatarProps {
   name?: string;
   src?: string;
-  size?: AvatarSize;
+  size?: AvatarSize | number;
   style?: CSSProperties;
 }
 
-const sizeMap: Record<AvatarSize, number> = {
+const namedSize: Record<AvatarSize, number> = {
   xs: 24,
   sm: 32,
   md: 40,
   lg: 64,
 };
 
+function fontSizeForDimension(d: number): number {
+  if (d <= 32) return 12;
+  if (d <= 48) return 14;
+  return 20;
+}
+
 export function Avatar({ name = '', src, size = 'md', style }: AvatarProps) {
-  const dimension = sizeMap[size];
+  const dimension = typeof size === 'number' ? size : namedSize[size];
   const initial = name.trim().slice(0, 1).toUpperCase() || '?';
 
   const base: CSSProperties = {
@@ -33,8 +39,8 @@ export function Avatar({ name = '', src, size = 'md', style }: AvatarProps) {
     justifyContent: 'center',
     background: color.bg['neutral-muted'],
     color: color.fg['neutral-solid'],
-    fontSize: dimension < 40 ? typography.label.sm.fontSize : typography.label.md.fontSize,
-    fontWeight: typography.heading.sm.fontWeight,
+    fontSize: fontSizeForDimension(dimension),
+    fontWeight: 600,
     flexShrink: 0,
   };
 
