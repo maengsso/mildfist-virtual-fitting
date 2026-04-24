@@ -194,7 +194,7 @@ function MemberRow({
           <Button
             variant="outline"
             tone={active ? 'brand' : 'positive'}
-            size="sm"
+            size="xs"
             onClick={() => onToggleActive?.(member.id, member.is_active)}
           >
             {active ? '비활성화' : '활성화'}

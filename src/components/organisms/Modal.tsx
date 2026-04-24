@@ -48,9 +48,9 @@ export function Modal({ open, onClose, title, children, footer, width = 480 }: M
   };
 
   const titleStyle: CSSProperties = {
-    fontSize: typography.heading.lg.fontSize,
-    fontWeight: typography.heading.lg.fontWeight,
-    lineHeight: typography.heading.lg.lineHeight,
+    fontSize: typography.heading.md.fontSize,
+    fontWeight: typography.heading.md.fontWeight,
+    lineHeight: typography.heading.md.lineHeight,
     color: color.fg['neutral-solid'],
     margin: 0,
   };

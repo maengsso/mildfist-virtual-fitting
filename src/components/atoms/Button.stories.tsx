@@ -10,7 +10,7 @@ const meta: Meta<typeof Button> = {
       control: 'select',
       options: ['primary', 'secondary', 'ghost', 'outline', 'circular'],
     },
-    size: { control: 'select', options: ['sm', 'md', 'lg', 'xl'] },
+    size: { control: 'select', options: ['xs', 'sm', 'md', 'lg', 'xl'] },
     tone: { control: 'select', options: ['brand', 'positive', 'critical', 'neutral'] },
     disabled: { control: 'boolean' },
     fullWidth: { control: 'boolean' },
@@ -24,18 +24,19 @@ type Story = StoryObj<typeof Button>;
 export const Primary: Story = {};
 export const Secondary: Story = { args: { variant: 'secondary' } };
 export const Ghost: Story = { args: { variant: 'ghost' } };
-export const OutlineBrand: Story = { args: { variant: 'outline', tone: 'brand', size: 'sm', children: '비활성화' } };
-export const OutlinePositive: Story = { args: { variant: 'outline', tone: 'positive', size: 'sm', children: '활성화' } };
+export const OutlineBrand: Story = { args: { variant: 'outline', tone: 'brand', size: 'xs', children: '비활성화' } };
+export const OutlinePositive: Story = { args: { variant: 'outline', tone: 'positive', size: 'xs', children: '활성화' } };
 export const Circular: Story = { args: { variant: 'circular', children: '+' } };
 
 export const Sizes: Story = {
   name: 'Sizes (실 사용 매핑)',
   render: () => (
     <div style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
-      <Button size="sm">sm — 회원탈퇴 (12r / 6·14)</Button>
-      <Button size="md">md — 좋아요·피팅 (16r / 8·20)</Button>
-      <Button size="lg">lg — 로그인·피팅시작 (16r / 12·20)</Button>
-      <Button size="xl">xl — 홈 FAB (20r / 12·24)</Button>
+      <Button size="xs">xs — admin outline·페이지네이션 (8r / 4·12 / 400)</Button>
+      <Button size="sm">sm — 회원탈퇴 (12r / 6·14 / 500)</Button>
+      <Button size="md">md — 좋아요·피팅 (16r / 8·20 / 500)</Button>
+      <Button size="lg">lg — 로그인·피팅시작 (16r / 12·20 / 500)</Button>
+      <Button size="xl">xl — 홈 FAB (20r / 12·24 / 500)</Button>
     </div>
   ),
 };
@@ -43,22 +44,22 @@ export const Sizes: Story = {
 export const Disabled: Story = { args: { disabled: true } };
 
 export const AdminActionButtons: Story = {
-  name: 'Admin 아웃라인 (실 사용)',
+  name: 'Admin 아웃라인 (실 사용 — xs)',
   render: () => (
     <div style={{ display: 'flex', gap: 12, flexWrap: 'wrap' }}>
-      <Button variant="outline" tone="brand" size="sm">
+      <Button variant="outline" tone="brand" size="xs">
         비활성화
       </Button>
-      <Button variant="outline" tone="positive" size="sm">
+      <Button variant="outline" tone="positive" size="xs">
         활성화
       </Button>
-      <Button variant="outline" tone="brand" size="sm">
+      <Button variant="outline" tone="brand" size="xs">
         숨김
       </Button>
-      <Button variant="outline" tone="neutral" size="sm">
+      <Button variant="outline" tone="neutral" size="xs">
         삭제
       </Button>
-      <Button variant="secondary" size="sm">
+      <Button variant="secondary" size="xs">
         무시
       </Button>
     </div>

@@ -8,7 +8,7 @@ export type CardVariant = 'flat' | 'outlined' | 'floating';
 export interface CardProps {
   variant?: CardVariant;
   padding?: number | string;
-  radiusOverride?: 'card' | 'modal';
+  radiusOverride?: 'chip' | 'card' | 'modal';
   children?: ReactNode;
   style?: CSSProperties;
 }
@@ -39,7 +39,12 @@ export function Card({
   style,
 }: CardProps) {
   const base: CSSProperties = {
-    borderRadius: radiusOverride === 'modal' ? radius.modal : radius.card,
+    borderRadius:
+      radiusOverride === 'modal'
+        ? radius.modal
+        : radiusOverride === 'chip'
+          ? radius.chip
+          : radius.card,
     padding,
   };
 

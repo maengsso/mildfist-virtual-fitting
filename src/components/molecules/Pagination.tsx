@@ -29,9 +29,9 @@ export function Pagination({
 
   const btn = (isDisabled: boolean): CSSProperties => ({
     padding: '4px 12px',
-    fontSize: typography.label.sm.fontSize,
-    fontWeight: typography.label.sm.fontWeight,
-    lineHeight: typography.label.sm.lineHeight,
+    fontSize: typography.body.sm.fontSize,
+    fontWeight: typography.body.sm.fontWeight,
+    lineHeight: typography.body.sm.lineHeight,
     background: color.bg['neutral-muted'],
     color: color.fg['neutral-solid'],
     border: 'none',
@@ -41,7 +41,8 @@ export function Pagination({
   });
 
   const counter: CSSProperties = {
-    fontSize: typography.label.sm.fontSize,
+    fontSize: typography.body.sm.fontSize,
+    fontWeight: typography.body.sm.fontWeight,
     color: color.fg['neutral-muted'],
   };
 
